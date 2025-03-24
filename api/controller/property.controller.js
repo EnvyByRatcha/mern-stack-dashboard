@@ -18,7 +18,7 @@ const getAllProperty = async (req, res) => {
     _start,
     _sort,
     title_like = "",
-    propertyType = "",
+    propertyType_like = "",
   } = req.query;
 
   const query = {};
@@ -27,12 +27,12 @@ const getAllProperty = async (req, res) => {
     query.title = { $regex: title_like, $options: "i" };
   }
 
-  if (propertyType !== "") {
-    query.propertyType = propertyType;
+  if (propertyType_like !== "") {
+    query.propertyType = propertyType_like;
   }
 
   try {
-    const count = await PropertyModel.countDocuments(query);
+    const count = await PropertyModel.countDocuments({ query });
     const properties = await PropertyModel.find(query)
       .limit(_end)
       .skip(_start)
@@ -93,7 +93,6 @@ const createProperty = async (req, res) => {
     await newProperty.save({ session });
 
     await session.commitTransaction();
-    session.endSession();
 
     res.status(200).json({ message: "Property created successfully" });
   } catch (error) {

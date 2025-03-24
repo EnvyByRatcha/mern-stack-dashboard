@@ -74,7 +74,7 @@ const PropertiesDetail = () => {
       bgcolor={"#fcfcfc"}
       width={"100%"}
     >
-      <Typography fontSize={24} fontWeight={500} color="#11142d">
+      <Typography fontSize={24} fontWeight={700} color="#11142d">
         {resultProperty?.title}
       </Typography>
       <Box
@@ -89,7 +89,7 @@ const PropertiesDetail = () => {
             src={resultProperty?.photo}
             alt={resultProperty?.photo}
             width={"100%"}
-            height={540}
+            height={"auto"}
             style={{ objectFit: "cover", borderRadius: "8px" }}
           />
           <Box mt={1}>
@@ -98,14 +98,26 @@ const PropertiesDetail = () => {
               justifyContent={"space-between"}
               alignItems={"center"}
             >
-              <Typography
-                fontSize={24}
-                fontWeight={500}
-                color="#11142d"
-                textTransform={"capitalize"}
-              >
-                {resultProperty?.propertyType}
-              </Typography>
+              <Stack direction={"row"} gap={1}>
+                <Typography
+                  fontSize={20}
+                  fontWeight={600}
+                  color="#11142d"
+                  textTransform={"capitalize"}
+                >
+                  {resultProperty?.title}
+                </Typography>
+                <Typography
+                  mt={0.7}
+                  fontSize={14}
+                  fontWeight={500}
+                  color="#11142d"
+                  textTransform={"capitalize"}
+                >
+                  #{resultProperty?.propertyType}
+                </Typography>
+              </Stack>
+
               <Box>
                 {[1, 2, 3, 4, 5].map((i) => {
                   return (
@@ -127,17 +139,17 @@ const PropertiesDetail = () => {
             >
               <Box>
                 <Typography
-                  fontSize={22}
+                  fontSize={18}
                   fontWeight={600}
                   color="#11142d"
                   textTransform={"capitalize"}
                 >
-                  {resultProperty?.title}
+                  Place
                 </Typography>
                 <Stack direction={"row"} gap={0.5} alignItems={"center"}>
-                  <Place sx={{ color: "#808191" }} />
+                  <Place sx={{ color: "#DD5043" }} />
                   <Typography
-                    fontSize={22}
+                    fontSize={20}
                     fontWeight={600}
                     color="#11142d"
                     textTransform={"capitalize"}
@@ -157,7 +169,7 @@ const PropertiesDetail = () => {
                 </Typography>
                 <Stack direction={"row"} alignItems={"flex-end"} gap={1}>
                   <Typography
-                    fontSize={25}
+                    fontSize={20}
                     fontWeight={600}
                     color="#475BE8"
                     textTransform={"capitalize"}
@@ -168,7 +180,7 @@ const PropertiesDetail = () => {
                     fontSize={14}
                     color="#808191"
                     textTransform={"capitalize"}
-                    mb={0.8}
+                    mb={0.5}
                   >
                     for sell
                   </Typography>
@@ -177,7 +189,7 @@ const PropertiesDetail = () => {
             </Stack>
             <Stack direction={"column"} alignItems={"flex-start"} gap={1}>
               <Typography
-                fontSize={25}
+                fontSize={18}
                 fontWeight={600}
                 color="#11142d"
                 mt={"8px"}
@@ -192,10 +204,10 @@ const PropertiesDetail = () => {
         </Box>
         <Box
           flex={1}
-          maxWidth={326}
+          maxWidth={328}
           width={"100%"}
           display={"flex"}
-          flexDirection={"column"}
+          flexDirection={{ xs: "column", sm: "row", lg: "column" }}
           gap={"16px"}
         >
           <Stack

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
+  Grid2,
   MenuItem,
   Select,
   Stack,
@@ -40,7 +41,7 @@ const AllProperties = () => {
     return {
       title: logical.find((item) => item.field === "title")?.value || "",
       properType:
-        logical.find((item) => item.field === "properType")?.value || "",
+        logical.find((item) => item.field === "propertyType")?.value || "",
     };
   }, [filters]);
 
@@ -55,36 +56,21 @@ const AllProperties = () => {
 
   return (
     <Box>
-      <Box mt={"20px"} sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-        <Stack direction={"column"} width={"100%"}>
-          <Typography>
-            {resultProperties.length > 0 ? "All Properties" : "No Properties"}
+      <Box mt={"20px"} sx={{ display: "flex", flexWrap: "wrap" }}>
+        <Stack direction={"column"} width={"100%"} gap={2}>
+          <Typography fontSize={25} fontWeight={700} color={"#11142d"}>
+            {resultProperties.length > 0
+              ? "All Properties"
+              : "Not Found Properties"}
           </Typography>
-          <Box
-            mb={2}
-            mt={1}
-            display={"flex"}
-            width={"84%"}
-            justifyContent={"space-between"}
-            flexWrap={"wrap"}
-          >
-            <Box
-              display={"flex"}
-              gap={2}
-              flexWrap={"wrap"}
-              mb={{ xs: "20px", sm: "0px" }}
-            >
-              <CustomButton
-                title={`Sort Price ${currentPrice === "asc" ? "↑" : "↓"}`}
-                color="#fcfcfc"
-                handleClick={() => toggleSort("price")}
-                backgroundColor={"#475be8"}
-              />
+          <Box display={"flex"} width={"100%"} flexWrap={"wrap"}>
+            <Box display={"flex"} gap={{ xs: 1, sm: 2 }} flexWrap={"wrap"}>
               <TextField
                 variant="outlined"
                 color="info"
-                placeholder="Search Property"
+                label="Search Property"
                 value={currentFilters.title}
+                size="small"
                 onChange={(e) => {
                   setFilters([
                     {
@@ -105,11 +91,12 @@ const AllProperties = () => {
                 inputProps={{ "aria-label": "Without label" }}
                 defaultValue=""
                 value={currentFilters.properType}
+                size="small"
                 onChange={(e) => {
                   setFilters(
                     [
                       {
-                        field: "properType",
+                        field: "propertyType",
                         operator: "contains",
                         value: e.target.value,
                       },
@@ -118,12 +105,20 @@ const AllProperties = () => {
                   );
                 }}
               >
-                {["apartment", "villa", "condo", "studio"].map((item) => (
+                {" "}
+                <MenuItem value="">All</MenuItem>
+                {["Apartment", "Villa", "Condo", "Studio"].map((item) => (
                   <MenuItem key={item} value={item.toLowerCase()}>
                     {item}
                   </MenuItem>
                 ))}
               </Select>
+              <CustomButton
+                title={`Sort Price ${currentPrice === "asc" ? "↑" : "↓"}`}
+                color="#fcfcfc"
+                handleClick={() => toggleSort("price")}
+                backgroundColor={"#475be8"}
+              />
             </Box>
           </Box>
           <Stack
@@ -140,19 +135,36 @@ const AllProperties = () => {
             />
           </Stack>
         </Stack>
-        {resultProperties.map((property) => {
-          return (
-            <PropertyCard
-              key={property._id}
-              id={property._id}
-              title={property.title}
-              location={property.location}
-              price={property.price}
-              photo={property.photo}
-            ></PropertyCard>
-          );
-        })}
+        <Grid2
+          width={"100%"}
+          mt={2}
+          container
+          spacing={{ xs: 1, sm: 2 }}
+          columns={{ xs: 12 }}
+        >
+          {resultProperties.map((property) => {
+            return (
+              <Grid2
+                sx={{
+                  borderRadius: "8px",
+                  boxShadow: "0 22px 45px 2px rgba(0, 0, 0, 0.1)",
+                }}
+                key={property._id}
+                size={{ xs: 6, sm: 4, md: 3 }}
+              >
+                <PropertyCard
+                  id={property._id}
+                  title={property.title}
+                  location={property.location}
+                  price={property.price}
+                  photo={property.photo}
+                ></PropertyCard>
+              </Grid2>
+            );
+          })}
+        </Grid2>
       </Box>
+
       <Box display={"flex"} gap={2} mt={3} flexWrap={"wrap"}>
         <CustomButton
           title="Previous"
@@ -185,6 +197,7 @@ const AllProperties = () => {
           required
           inputProps={{ "aria-label": "Without label" }}
           defaultValue="10"
+          size="small"
           onChange={(e) => {
             // setPageSize(e.target.value);
           }}

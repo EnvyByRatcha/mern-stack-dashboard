@@ -6,7 +6,7 @@ import { Box, Stack, Typography } from "@mui/material";
 
 const Home = () => {
   return (
-    <Box>
+    <Box py={2}>
       <Typography fontSize={25} fontWeight={700} color={"#11142d"}>
         Dashboard
       </Typography>
@@ -39,7 +39,12 @@ const Home = () => {
           colors={["#275be8", "#c4e8ef"]}
         />
       </Box>
-      <Stack mt={"24px"} width={"100%"} direction={{ xs: "column", lg: "row" }} gap={4}>
+      <Stack
+        mt={"24px"}
+        width={"100%"}
+        direction={{ xs: "column", lg: "row" }}
+        gap={4}
+      >
         <TotalRevenue />
         <PropertyReferral />
       </Stack>
