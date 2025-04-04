@@ -24,11 +24,13 @@ const PropertyCard = ({ id, title, location, price, photo }: CardProps) => {
     >
       <CardMedia
         component={"img"}
-        width={"100%"}
-        height={210}
         image={photo}
         alt={title}
-        sx={{ borderRadius: "8px 8px 0px 0px" }}
+        sx={{
+          borderRadius: "8px 8px 0px 0px",
+          height: { xs: 120, sm: 180, md: 220 },
+          width: "100%",
+        }}
       />
       <CardContent
         sx={{

@@ -12,27 +12,26 @@ cloudinary.config({
 });
 
 const getAllProperty = async (req, res) => {
-  const {
-    _end,
-    _order,
-    _start,
-    _sort,
-    title_like = "",
-    propertyType_like = "",
-  } = req.query;
-
-  const query = {};
-
-  if (title_like !== "") {
-    query.title = { $regex: title_like, $options: "i" };
-  }
-
-  if (propertyType_like !== "") {
-    query.propertyType = propertyType_like;
-  }
-
   try {
-    const count = await PropertyModel.countDocuments({ query });
+    const {
+      _end,
+      _order,
+      _start,
+      _sort,
+      title_like = "",
+      propertyType_like = "",
+    } = req.query;
+
+    const query = {};
+
+    if (title_like !== "") {
+      query.title = { $regex: title_like, $options: "i" };
+    }
+
+    if (propertyType_like !== "") {
+      query.propertyType = propertyType_like;
+    }
+    const count = await PropertyModel.countDocuments({ ...query });
     const properties = await PropertyModel.find(query)
       .limit(_end)
       .skip(_start)
@@ -97,6 +96,8 @@ const createProperty = async (req, res) => {
     res.status(200).json({ message: "Property created successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  } finally {
+    session.endSession();
   }
 };
 

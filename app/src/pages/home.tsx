@@ -6,11 +6,11 @@ import { Box, Stack, Typography } from "@mui/material";
 
 const Home = () => {
   return (
-    <Box py={2}>
+    <Box p={1} my={"8px"}>
       <Typography fontSize={25} fontWeight={700} color={"#11142d"}>
         Dashboard
       </Typography>
-      <Box mt={"20px"} display="flex" flexWrap="wrap" gap={4}>
+      <Box mt={"20px"} display="flex" flexWrap="wrap" gap={2}>
         <PieChart
           title="Properties for sale"
           value={30}
@@ -40,10 +40,10 @@ const Home = () => {
         />
       </Box>
       <Stack
-        mt={"24px"}
+        mt={"16px"}
         width={"100%"}
         direction={{ xs: "column", lg: "row" }}
-        gap={4}
+        gap={2}
       >
         <TotalRevenue />
         <PropertyReferral />

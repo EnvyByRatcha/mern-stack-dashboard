@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { CustomButton, PropertyCard } from "../components";
 import { useNavigate } from "react-router";
-import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   Grid2,
@@ -27,6 +26,8 @@ const AllProperties = () => {
     setSorters,
     filters,
     setFilters,
+    pageSize,
+    setPageSize,
   } = useTable();
 
   const currentPrice = sorter.find((item) => item.field === "price")?.order;
@@ -54,9 +55,12 @@ const AllProperties = () => {
   if (isLoading) return <Typography>isLoading...</Typography>;
   if (isError) return <Typography>isError...</Typography>;
 
+  const hasNext = current < pageCount;
+  const hasPrev = current > 1;
+
   return (
-    <Box>
-      <Box mt={"20px"} sx={{ display: "flex", flexWrap: "wrap" }}>
+    <Box padding={1} my={"8px"}>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <Stack direction={"column"} width={"100%"} gap={2}>
           <Typography fontSize={25} fontWeight={700} color={"#11142d"}>
             {resultProperties.length > 0
@@ -114,7 +118,7 @@ const AllProperties = () => {
                 ))}
               </Select>
               <CustomButton
-                title={`Sort Price ${currentPrice === "asc" ? "↑" : "↓"}`}
+                title={`Sort Price ${currentPrice === "asc" ? "↓" : "↑"}`}
                 color="#fcfcfc"
                 handleClick={() => toggleSort("price")}
                 backgroundColor={"#475be8"}
@@ -165,13 +169,19 @@ const AllProperties = () => {
         </Grid2>
       </Box>
 
-      <Box display={"flex"} gap={2} mt={3} flexWrap={"wrap"}>
+      <Box
+        display={"flex"}
+        gap={2}
+        mt={3}
+        flexWrap={"wrap"}
+        justifyContent={"center"}
+      >
         <CustomButton
           title="Previous"
           handleClick={() => setCurrent((prev) => prev - 1)}
           backgroundColor="#475be8"
           color="#fcfcfc"
-          disable={!(current > 1)}
+          disable={!hasPrev}
         />
         <Box
           display={{ xs: "hidden", sm: "flex" }}
@@ -188,7 +198,7 @@ const AllProperties = () => {
           handleClick={() => setCurrent((prev) => prev + 1)}
           backgroundColor="#475be8"
           color="#fcfcfc"
-          disable={current === pageCount}
+          disable={!hasNext}
         />
         <Select
           variant="outlined"
@@ -196,10 +206,11 @@ const AllProperties = () => {
           displayEmpty
           required
           inputProps={{ "aria-label": "Without label" }}
-          defaultValue="10"
+          value={pageSize}
           size="small"
           onChange={(e) => {
-            // setPageSize(e.target.value);
+            const value = e.target.value ? Number(e.target.value) : 10;
+            setPageSize(value);
           }}
         >
           {[5, 10, 15, 20].map((size) => (

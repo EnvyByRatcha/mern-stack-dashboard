@@ -30,7 +30,6 @@ const CustomButton = ({
         flex: fullWidth ? 1 : "unset",
         justifyContent: "center",
         alignItems: "center",
-        padding: "8px 12px",
         width: fullWidth ? "199%" : "unset",
         backgroundColor,
         color,
@@ -45,7 +44,7 @@ const CustomButton = ({
       }}
       onClick={handleClick}
     >
-      <Stack>{icon}</Stack>
+      {icon && <Stack>{icon}</Stack>}
       <Typography>{title}</Typography>
     </Button>
   );
